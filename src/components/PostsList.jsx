@@ -5,38 +5,33 @@ import Modal from './Modal';
 import { useState } from 'react';
 
 
-function PostsList() {
+function PostsList(props) {
+    const [posts, setPosts] = useState([]);
 
-    const [enteredBody, setEnteredBody] = useState('enter body');
-    const [enteredAuthor, setEnteredAuthor] = useState('enter name');
-    const [modalIsVisible, setModalIsVisible] = useState(true);
-
-    function bodyChangeHandler(event) {
-        setEnteredBody(event.target.value);
-    }
-
-    function authorChangeHandler(event) {
-        setEnteredAuthor(event.target.value);
-    }
-
-    function hideModalHandler() {
-        setModalIsVisible(false);
+    function addPostHandler(postData) {
+        setPosts((prevPosts) => {
+            return [postData, ...prevPosts];
+        });
     }
 
     return (
         <>
-            { modalIsVisible && (
-                <Modal onClose={ hideModalHandler }>
+            { props.isPosting && (
+                <Modal onClose={ props.onStopPosting }>
                     <NewPost
-                        onBodyChange={ bodyChangeHandler } onAuthorChange={ authorChangeHandler }
+                        onCancel={ props.onStopPosting }
+                        onAddPost={ addPostHandler }
                     />
                 </Modal>
             ) }
 
             <ul className={ styles.posts }>
-                <Post author={ enteredAuthor } text={ enteredBody } />
-                <Post author="Lisa" text="more text here" />
-                <Post author="Silvia" text="more text here" />
+                {
+                    // <Post author={ enteredAuthor } text={ enteredBody } />
+                    // <Post author="Lisa" text="more text here" />
+                    posts.map((post) => <Post key={ post.body } author={ post.author } text={ post.body } />)
+                }
+
             </ul>
         </>
     );

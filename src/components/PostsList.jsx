@@ -1,11 +1,11 @@
 import styles from './PostsList.module.css';
 import Post from './Post';
-import NewPost from './NewPost';
-import Modal from './Modal';
+// import NewPost from '../routes/NewPost';
+// import Modal from './Modal';
 import { useState, useEffect } from 'react';
 
 
-function PostsList(props) {
+function PostsList() {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -36,14 +36,14 @@ function PostsList(props) {
 
     return (
         <>
-            { props.isPosting && (
+            {/* { props.isPosting && (
                 <Modal onClose={ props.onStopPosting }>
                     <NewPost
                         onCancel={ props.onStopPosting }
                         onAddPost={ addPostHandler }
                     />
                 </Modal>
-            ) }
+            ) } */}
 
             { !isLoading && posts.length > 0 && (
                 <ul className={ styles.posts }>
